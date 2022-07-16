@@ -1,4 +1,5 @@
 from cmath import pi
+from gettext import install
 from math import radians
 
 
@@ -102,6 +103,60 @@ a
 # +1: ; sign 4 1+ commands on 1 line:
 mylist = list(range(1,10)) ; print(mylist[:5])
 
+# subsetting from end
 mylist[-4:-2]
+
 # 3) Functions & Packages ----
+
+# 3.1) Functions -----
+type(mylist)
+max(mylist)
+
+round(float(heights[1]), 0) # either subset 1 element
+round(heights, 1) # cant handle / comprehend lists directly
+
+roundedheights = [round(x, 1) for x in heights] # Use List Comprehension instead
+
+len(roundedheights) # Nr. elements in list
+
+help(pow) # check documentation
+pow(10, 3)  # Base, Exponent
+pow(10, 3, 3) # Base, Exponent, Mod --> get remained fr integer division
+
+sorted(heights) # sort Nr.s ascending by default
+sorted(heights, reverse = True) # sort descending order
+
+# 3.2) Methods -----
+namesheights.index('ubi') 
+namesheights2.index('ubi') # Not on list-of-lists
+
+namesheights.count(1.81) 
+
+names = ['dad', 'mom', 'ubi', 'buda', 'frutti', 'pofi']
+names.reverse()
+
+names[0].capitalize()
+names[0].upper()
+names[0].lower()
+names[0].count('d')
+names[0].replace('a', 'AAAAAA')
+
+[x.capitalize() for x in names]             # w list comprehension
+[x.replace('a', 'AAAAAA') for x in names]   # w list comprehension
+
+names.append(['lena', 'mark']) #  adds nested list --> add 1 by 1 --> list comprehension
+[names.append(x) for x in ['lena', 'mark']]
+
+# 3.3) Packages -----
+    # pip install numpy np --> run on Command Prompt
+import sys
+print(sys.version)
+import numpy as np
+
+npheights = np.array(heights)
+type(npheights)
+
+
+
 # 4) NumPy ----
+
