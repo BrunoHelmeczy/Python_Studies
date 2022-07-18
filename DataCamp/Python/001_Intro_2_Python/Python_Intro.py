@@ -156,7 +156,62 @@ import numpy as np
 npheights = np.array(heights)
 type(npheights)
 
+# Exs)
 
+import math
+
+radius = 0.43
+C = math.pi * 2 * radius
+A = math.pi * radius ** 2
+
+print("Circumference: " + str(C))
+print("Area: " + str(A))
+
+from math import radians
+radius2 = 192500
+distance = radius2 * radians(12)
+print(distance)
 
 # 4) NumPy ----
+heights = [1.73, 1.68, 1.71, 1.89, 1.79]
+weights = [65.4, 59.2, 63.6, 88.4, 68.7]
+
+np_heights = np.array(heights)
+np_weights = np.array(weights)
+
+bmis = np_weights / np_heights ** 2
+bmis.round(2)
+
+bmis[2:4]
+bmis[bmis > 21.5]
+
+# 2D NumPy arrays ---
+np2d_bmidata = np.array([heights, weights])
+type(np2d_bmidata)
+
+np2d_bmidata.shape # (2, 5)  --> 2 rows, 5 columns
+np2d_bmidata.transpose().shape # (5, 2) --> 5rows, 2 cols
+
+# subsetting np.arrays
+np2d_bmidata[0][3]
+np2d_bmidata[0, 3]
+np2d_bmidata[:, 1:3]
+np2d_bmidata[1, :]
+
+bla = np.array([1,2,3,4,5])
+out = (np2d_bmidata * np2d_bmidata) ** bla
+out.round(2)
+
+# Basic Stats ---
+np.mean(np2d_bmidata[1, :])
+np.median(np2d_bmidata[1, :])
+np.std(np2d_bmidata[1, :])
+np.corrcoef(np2d_bmidata)
+
+sampledHeights = np.random.normal(100, 15, 10000)
+sampledWeights = np.random.normal(100, 5, 10000)
+
+len(sampledHeights[sampledHeights > 145]) / len(sampledHeights)
+
+Sampled4bmi_np2d = np.column_stack((sampledHeights, sampledWeights))
 
