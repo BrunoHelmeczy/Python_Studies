@@ -1,3 +1,4 @@
+# py -m pip install ipykernel
 import pandas as pd
 gapminder = pd.read_csv('https://assets.datacamp.com/production/repositories/287/datasets/5b1e4356f9fa5b5ce32e9bd2b75c777284819cca/gapminder.csv')
 cars = pd.read_csv('https://assets.datacamp.com/production/repositories/287/datasets/79b3c22c47a2f45a800c62cae39035ff2ea4e609/cars.csv')
@@ -6,7 +7,8 @@ BRICS = pd.read_csv(BRICSfile)
 
 
 # 1) Matplotlib -----
-    # pip3 install ipykernel
+# py -m pip install ipykernel
+# py -m pip install matplotlib
 import matplotlib.pyplot as plt
 
 year = [1950, 1970, 1990, 2010]
