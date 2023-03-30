@@ -9,4 +9,5 @@ This is my Repository for learning python. It contains 2 main distinctions so fa
  - Check if Number is prime / divisible by x
  - List Primes 1 to n
  - Number prime decomposition
+ - probability of a point landing in a unit radius circle inside a 2*unit side square
 
