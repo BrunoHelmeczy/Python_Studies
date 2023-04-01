@@ -4,3 +4,10 @@
 # 2. Use a loop and a second list to solve it more manually
 
 list_ = [1, 2, 3, 4, 3, 4, 5]
+
+list(set(list_))
+list(dict.fromkeys(list_))
+
+newlist = []
+[newlist.append(n) if (n not in newlist) else None for n in list_]
+

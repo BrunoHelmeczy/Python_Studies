@@ -6,3 +6,13 @@
 #
 # Example input:  1,2,3,4,5,6,7,8,9,10
 # Example output: 2,4,6,8,10,9,7,5,3,1
+
+nr = [1,2,3,4,5,6,7,8,9,10]
+
+nr[1::2] + nr[:-1][::-2]
+
+def oddEvenShuffle(listIn):
+    return listIn[1::2] + listIn[:-1][::-2]
+
+NRs = [x for x in range(1, 101)]
+oddEvenShuffle(NRs)

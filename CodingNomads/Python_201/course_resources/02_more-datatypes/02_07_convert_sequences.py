@@ -4,4 +4,12 @@
 # - Change the `c` character in your list into a `k`
 # - Convert the list back into a tuple.
 
-string = "codingnomads"
+string  = "codingnomads"
+stringT = tuple(string)
+stringL = [l for l in stringT]
+stringL[stringL.index('c')] = 'k'
+
+stringT2 = tuple(stringL)
+
+''.join(stringL)
+''.join(stringT2)

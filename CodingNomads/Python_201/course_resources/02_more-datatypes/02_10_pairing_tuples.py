@@ -12,8 +12,25 @@
 # Note: This lab might be challenging! Make sure to discuss it 
 # with your mentor or chat about it on our forum.
 
-from resources import randlist
-
-print(randlist)
-
+from random import randint
 # Write your code below here
+
+def genRandList(nrs = 25):
+    return [randint(-100, 100) for x in range(nrs)]
+
+def genTuplesFromList(nrList = genRandList(), tupleLength = 2):
+    nrList.sort()
+
+    out = [tuple(nrList[i:(i + tupleLength)]) for i in range(0, len(nrList), tupleLength)]
+
+    [print(o) for o in out]
+    return out
+
+chk = genTuplesFromList()
+# chk = genTuplesFromList(tupleLength=5)
+
+
+
+
+
+

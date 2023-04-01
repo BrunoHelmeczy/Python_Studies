@@ -22,3 +22,14 @@ office = [
     {"full_name": "Creed Bratton", "item": "mung beans"},
     {"full_name": "Darryl Philbin", "item": "forklift"},
 ]
+
+import re
+
+def printOfficeSupplies(office):
+    Pretty1stNames = [re.sub('.+ (.+)$', '\\1', office[x]['full_name']) for x in range(len(office))]
+    PrettyLASTNames = [re.sub('^(.+) .+', '\\1', office[x]['full_name']).upper() for x in range(len(office))]
+
+    [print(f"{PrettyLASTNames[i] :>10}, {Pretty1stNames[i]:>10} {office[i]['item']:>20}") for i in range(len(office))]
+    return ''
+
+printOfficeSupplies(office)

@@ -16,3 +16,12 @@ famous_quotes = [
     {"full_name": "Nathan Myhrvold", "quote": "Software is a gas; it expands to fill its container."},
     {"full_name": "Alan Bennett", "quote": "Standards are always out of date.  That’s what makes them standards."}
 ]
+
+import re
+
+def printQuotes(famous_quotes):
+    PrettyNames = [re.sub('^(.+) (.+)$', '\\2, \\1', famous_quotes[x]['full_name']) for x in range(len(famous_quotes))]
+    [print(f"'{famous_quotes[x]['quote']}' -  {PrettyNames[x]}") for x in range(len(famous_quotes))]
+    return print('')
+
+printQuotes(famous_quotes)
