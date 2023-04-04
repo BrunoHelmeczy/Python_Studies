@@ -16,9 +16,9 @@ def countFilesUnderDesktop():
 
 def writeFileCount2File():
     home = pathlib.Path.home()
-    # cwd = pathlib.Path.cwd()
     DataFolder = home / 'Desktop' / 'My_Professional_Development' / 'Python_Studies' / 'CodingNomads' / 'Python_201' / 'data'
     DataFolder.mkdir(exist_ok = True)
+    cwd = os.getcwd()
     os.chdir(DataFolder)
 
     myfile = open('check.txt', 'a')
@@ -28,5 +28,7 @@ def writeFileCount2File():
 
     myfile.write(f"\n{TimeNow}: {str(filecount)}")
     myfile.close()
+
+    os.chdir(cwd)
 
 writeFileCount2File()
