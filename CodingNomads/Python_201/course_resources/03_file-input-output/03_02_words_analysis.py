@@ -4,7 +4,7 @@
 # 1. The shortest word (if there is a tie, print all)
 # 2. The longest word (if there is a tie, print all)
 # 3. The total number of words in the file.
-
+import pathlib
 txt = pathlib.Path().resolve().joinpath('CodingNomads/Python_201/course_resources/03_file-input-output/words.txt')
 
 # Input = txt.open('r')
@@ -25,5 +25,3 @@ with txt.open('r') as Input:
     print(f"There are in total {len(Words)} words.")
     print(f"These are the shortest word(s): {MinWords} ")
     print(f"These are the longest  word(s): {MaxWords} ")
-
-# Input.close()
