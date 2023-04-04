@@ -22,14 +22,12 @@ def writeFileCount2File(filename = 'check.txt'):
     cwd = os.getcwd()
     os.chdir(DataFolder)
 
-    myfile = open(filename, 'a')
-
-    filecount = countFilesUnderDesktop()
-
-    TimeNow = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-
-    myfile.write(f"\n{TimeNow}: {str(filecount)}")
-    myfile.close()
+    # myfile = open(filename, 'a')
+    with open(filename, 'a') as myfile:
+        filecount = countFilesUnderDesktop()
+        TimeNow = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        myfile.write(f"\n{TimeNow}: {str(filecount)}")
+        # myfile.close()
 
     os.chdir(cwd)
 
@@ -40,14 +38,13 @@ def readFileCountFile(filename = 'check.txt'):
     cwd = os.getcwd()
     os.chdir(DataFolder)
 
-    myfile = open(filename, 'r')
-    content = myfile.read()
-    contlist = content.split('\n')
+    with open(filename, 'r') as myfile:
+        content = myfile.read()
+        contlist = content.split('\n')
 
     splits = [s.strip() for s in re.sub('^.+ {(.+)}$', '\\1', contlist[-1]).split(',')]
     origdict = {x.split(':')[0].replace("'",''): int(x.split(':')[1]) for x in splits}
 
-    myfile.close()
     os.chdir(cwd)
 
     return sum(origdict.values())
