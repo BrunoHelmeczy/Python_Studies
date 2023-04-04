@@ -21,8 +21,9 @@ def findSpecFileTypesUnderDir(suffix = 'py', path = pathlib.Path.home() / 'Deskt
     out = list(
         compress(
             path.rglob('*'),
-            [f.suffix == '.py' for f in path.rglob('*')]
+            [f.suffix == '.' + suffix for f in path.rglob('*')]
         )
     )
     return out
     
+# findSpecFileTypesUnderDir()
