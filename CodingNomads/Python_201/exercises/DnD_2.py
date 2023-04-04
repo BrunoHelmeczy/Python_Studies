@@ -1,13 +1,3 @@
-# Save allowed user inputs --> check against when user chooses
-# Create player inventory --> they can add / remove items
-# Players should be able to collect items found in rooms and add them to their inventory.
-# If they lose a fight against the dragon, then they should lose their inventory items.
-# Add more rooms to your game and allow your player to explore.
-# Some rooms can be empty, others can contain items, and yet others can contain an opponent.
-# Implement some logic that decides whether or not your player can beat the opponent depending on what items they have in their inventory
-# Use the random module to add a multiplier to your battles, similar to a dice roll in a real game. 
-    # This effects player wins / loses when battling
-
 from random import randint
 from random import sample
 
