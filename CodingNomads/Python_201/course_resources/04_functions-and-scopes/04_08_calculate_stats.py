@@ -4,8 +4,18 @@
 
 example_list = [1, 2, 3, 4, 5, 6, 7]
 
-def stats():
-  # define the function here
-  pass
+def stats(nrs = example_list):
+    Min = min(nrs)
+    Max = max(nrs)
+    Sum = sum(nrs)
+    Mean = Sum / len(nrs)
 
-# call the function below here
+    out = {'min': Min, 'max': Max, 'mean': Mean, 'sum': Sum }
+
+    print(f"Input: {nrs} \nOutput Summary:")
+
+    [print(f"{k}: {v}") for k, v in out.items()]
+
+    return out
+
+stats()
