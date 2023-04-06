@@ -4,3 +4,6 @@
 # for letter in 'suchalongword':
 #     letters.append(letter)
 # print(letters)
+
+[l for l in 'suchalongword']
+(l for l in 'suchalongword')
