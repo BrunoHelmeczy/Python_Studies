@@ -1,3 +1,6 @@
 python-3.11.2-amd64.exe
 *.txt
 *.csv
+*.png
+jetbrains*
+*.ipynb
