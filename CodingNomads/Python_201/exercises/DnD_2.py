@@ -1,11 +1,23 @@
 from random import randint
 from random import sample
+import requests
+
+def generateName(name_length = 5):
+    url = f"https://uzby.com/api.php?min={name_length}&max={name_length}"
+    res = requests.get(url)
+    return res.text
 
 def gameIntro():
     print("Welcome to this mini Dungeons & Dragons game!!! \nGood Luck in the wars to come! \n")
-    name = input('What\'s your name ?')
-    print(f"Welcome '{name}'\nMy Game World Intro")
-    return print('')
+    name = ''
+
+    while len(name) < 3:
+        name = input('What\'s your name ?')
+        if len(name) < 3:
+            print('select a name of 3+ characters')
+
+    print(f"Welcome '{generateName(len(name))}'\nMy Game World Intro")
+    # return print('')
 
 def chooseDoor(nr_doors = randint(2, 8)):
     doors = {str(x): str(x) for x in range(1, nr_doors+1)}
