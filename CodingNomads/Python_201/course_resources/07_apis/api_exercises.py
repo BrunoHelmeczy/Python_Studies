@@ -53,5 +53,3 @@ def deleteUser():
     res = requests.delete(users)
 
     print(res.status_code)
-
-

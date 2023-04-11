@@ -3,7 +3,9 @@ import mysql.connector
 from pathlib import Path
 
 def getDBlogin():
-    txt = Path().resolve().joinpath('CodingNomads/Python_201/course_resources/07_apis/secrets.txt')
+    mypath = Path().resolve()
+
+    txt = list(mypath.rglob('secrets.txt'))[0]
 
     with txt.open('r') as Input:
         text = Input.read()
@@ -32,65 +34,79 @@ def queryDB(query, db_object = connect2DB()):
     res.insert(0, cols)
     return res
 
-db = connect2DB()
-
-queryDB("SELECT * FROM actor LIMIT 5", db_object = db)
-
-# query = query_str
-query_str = """
-    SELECT 
-            *
-        FROM film_actor fa
-        LEFT JOIN actor a USING(actor_id)
-        LEFT JOIN film f USING(film_id)
-    LIMIT 10
-"""
-
-res = queryDB(query_str, db_object=db)
-
-# Create / Alter / Insert into Table
 def alterDB(query, db_object = connect2DB()):
     cursor = db_object.cursor()
     cursor.execute(query)
 
     db_object.commit()
 
-# CREATE TABLE
-query = """
-    CREATE TABLE test (
-        name VARCHAR(16) NOT NULL, 
-        created_at DATETIME NOT NULL, 
-        id INT PRIMARY KEY NOT NULL AUTO_INCREMENT
-    )
-"""
+# db = connect2DB()
 
-# alterDB(query, db_object)
+# queryDB("SELECT * FROM actor LIMIT 5", db_object = db)
 
-# DROP TABLE IF EXISTS
-# alterDB('DROP TABLE IF EXISTS test', db_object)
+# # query = query_str
+# query_str = """
+#     SELECT 
+#             *
+#         FROM film_actor fa
+#         LEFT JOIN actor a USING(actor_id)
+#         LEFT JOIN film f USING(film_id)
+#     LIMIT 10
+# """
 
-# chk = queryDB("SELECT * FROM INFORMATION_SCHEMA.TABLES", db_object = db_object)
-# chk[0]
-# [t[2] for t in chk]
+# res = queryDB(query_str, db_object=db)
 
-alterDB("""
-    CREATE TABLE IF NOT EXISTS newTable (
-        id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-        name VARCHAR(50) NOT NULL,
-        salary FLOAT(2) DEFAULT 100,
-        active BOOLEAN DEFAULT true 
-    )
-""", db_object)
+# # Create / Alter / Insert into Table
 
-# INSERT INTO newTable (col1, col2, ...) VALUES (val1, val2, ...), (val1, val2, ...)
-alterDB("""
-    INSERT INTO newTable (name, salary, active) VALUES
-        ('record1', 80000, false),
-        ('record2', 70000, true)
-""", db_object)
+# # CREATE TABLE
+# query = """
+#     CREATE TABLE test (
+#         name VARCHAR(16) NOT NULL, 
+#         created_at DATETIME NOT NULL, 
+#         id INT PRIMARY KEY NOT NULL AUTO_INCREMENT
+#     )
+# """
 
-# queryDB("SELECT * FROM newTable", db_object) # check yourself
+# # alterDB(query, db_object)
 
+# # DROP TABLE IF EXISTS
+# # alterDB('DROP TABLE IF EXISTS test', db_object)
 
+# # chk = queryDB("SELECT * FROM INFORMATION_SCHEMA.TABLES", db_object = db_object)
+# # chk[0]
+# # [t[2] for t in chk]
 
+# alterDB("""
+#     CREATE TABLE IF NOT EXISTS newTable (
+#         id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+#         name VARCHAR(50) NOT NULL,
+#         salary FLOAT(2) DEFAULT 100,
+#         active BOOLEAN DEFAULT true 
+#     )
+# """, db_object)
 
+# # INSERT INTO newTable (col1, col2, ...) VALUES (val1, val2, ...), (val1, val2, ...)
+# alterDB("""
+#     INSERT INTO newTable (name, salary, active) VALUES
+#         ('record1', 80000, false),
+#         ('record2', 70000, true)
+# """, db_object)
+
+# chk = queryDB("SELECT * FROM newTable", db_object) # check yourself
+
+# chk[1]['id']
+
+# # UPDATE
+# alterDB("""
+#     UPDATE newTable
+#     SET 
+#         salary = 100000
+#     WHERE id = 1
+# """, db_object)
+
+# # DELETE
+# alterDB("""
+#     DELETE FROM newTable
+#     WHERE
+#         salary < 100000
+# """, db_object)
