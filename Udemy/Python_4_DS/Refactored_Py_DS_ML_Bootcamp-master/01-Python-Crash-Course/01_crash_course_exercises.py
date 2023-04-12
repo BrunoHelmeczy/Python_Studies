@@ -58,4 +58,39 @@ def findDog(input_string):
 findDog(longstring)
 findDog('this is another bloody string with cat')
 
-# 8)
+# 8) count number of times dog appears in string
+longstring2 = "this is a long string containing the word dog'go. who's a good boi dog'go"
+
+def countDogs(input_string):
+    base_str = re.sub('[^\w]', '', input_string.lower())
+
+    return len(re.findall('dog', base_str))
+
+countDogs(longstring2)
+countDogs('this is a random string')
+
+# 9) lambda expr + filter() to startwith('s')
+seq = ['soup','dog','salad','cat','great']
+
+ans91 = list(filter(lambda x: x.startswith('s'), seq))
+ans92 = [x for x in seq if x.startswith('s')]
+
+# 10) f(x) caught_speeding()
+# isBirthday = True
+def caught_speeding(speed: int, isBirthday: bool):
+    Speed = speed - 5 * isBirthday
+
+    if Speed <= 60:
+        return 'No ticket'
+    elif Speed <= 80:
+        return 'Small ticket'
+    else:
+        return 'Big ticket' 
+
+# caught_speeding(60, False)
+# caught_speeding(61, False)
+# caught_speeding(70, False)
+# caught_speeding(85, True)
+# caught_speeding(86, True)
+
+
