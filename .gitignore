@@ -5,3 +5,4 @@ python-3.11.2-amd64.exe
 jetbrains*
 *.ipynb
 __pycache__
+data
