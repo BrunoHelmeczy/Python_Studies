@@ -34,9 +34,3 @@ ser4 = pd.Series(['USA', 'Germany', 'Italy', 'Japan'])
 ser4[3]
 
 ser1 + ser2 # adding series by indices
-
-
-# 2) Dataframes
-from numpy.random import randn
-np.random.seed(101)
-
