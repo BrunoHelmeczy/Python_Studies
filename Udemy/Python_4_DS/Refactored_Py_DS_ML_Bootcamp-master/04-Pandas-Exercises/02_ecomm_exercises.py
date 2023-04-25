@@ -45,3 +45,27 @@ ecom[(ecom['CC Exp Date'].str.extract(r"/(.+)$") == '25').loc[:, 0]].shape[0]
 ecom['email_provider'] = ecom['Email'].str.extract(r'@(.+)$')
 
 ecom.groupby('email_provider').size().sort_values(ascending = False).head(5)
+
+# chk = ecom.pivot_table(
+#     index = 'email_provider',
+#     columns = 'AM or PM',
+#     values = 'Purchase Price'
+#     , aggfunc = len,
+#     # , aggfunc = 'median',
+#     fill_value = 0,
+#     margins = True,
+#     margins_name = 'All'
+# ).sort_values(by = 'All', ascending = False)
+
+# chk.drop()
+
+# ecom['AM or PM'].value_counts()
+
+# chk2 = np.array(ecom['Purchase Price'])
+
+# np.iq
+# import matplotlib.pyplot as plt
+# import seaborn as sns
+# help(plt.scatter)
+# plt.scatter()
+# sns.lin
