@@ -10,3 +10,29 @@
 #
 # Model such an application form as a Python class below, and instantiate
 # a few objects from it.
+
+class Ingredients:
+    pass
+
+i = Ingredients()
+i.name = 'carrot'
+
+class Ingredient:
+    def __init__(self):
+        self.name = 'carrot'
+
+
+i = Ingredient()
+i.name
+
+class Ingredient:
+    def __init__(self, name, quantity, origin):
+        self.name = name
+        self.quantity = quantity
+        self.origin = origin
+
+chk = Ingredient('pee', 3, 'Barbados')
+
+chk.name
+chk.origin
+chk.quantity
