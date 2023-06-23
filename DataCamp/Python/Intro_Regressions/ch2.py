@@ -79,8 +79,7 @@ plt.show()
 # coefficients
 lm_model.params
 
-# fitted values
-# same as lm_model.predict(taiwan_real_estate) 
+# fitted values - same as lm_model.predict(taiwan_real_estate) 
 lm_model.fittedvalues
 
 # residuals: Y-actuals - fittedvalues
@@ -89,4 +88,66 @@ lm_model.resid
 # Summary of results: Rsq + similar stats + coeffs & P-values
 lm_model.summary()
 
-# 
+# Model fit attributes
+lm_model.rsquared
+lm_model.mse_resid # MSE
+lm_model.mse_resid ** 0.5 # Residual Standard Error
+
+# RMSE
+np.sqrt(sum(lm_model.resid ** 2) / len(lm_model.resid))
+
+# model fit visualizations
+# residuals vs fitted
+# lm_model.params
+plot = sns.residplot(
+    x = 'n_convenience',
+    y = 'price_twd_msq',
+    data = taiwan_real_estate,
+    lowess = True
+)
+
+plot.set(
+    xlabel = 'Fitted Values',
+    ylabel = 'Residuals'
+)
+plt.show()
+
+# Q-Q plot
+
+## %%
+
+from statsmodels.api import qqplot
+qqplot(
+    data = lm_model.resid,
+    fit = True,
+    line = '45'
+)
+plt.show()
+
+## %%
+# Scale location plot:
+    # x: fitted values
+    # y: sqrt(standardized residuals)
+    
+    # normalized residuals
+lm_norm_resids = lm_model.get_influence().resid_studentized_internal 
+Y = np.sqrt(np.abs(lm_norm_resids))
+
+plot = sns.regplot(
+    x = lm_model.fittedvalues,
+    y = Y,
+    ci = None,
+    lowess = True
+)
+plot.set(
+    xlabel = 'Fitted Values',
+    ylabel = 'Sqrt(Normalized Residuals)'
+)
+
+plt.show()
+
+# Outliers, leverage, influence
+model_summ_frame = lm_model.get_influence().summary_frame()
+
+taiwan_real_estate['leverage'] = model_summ_frame['hat_diag']
+
