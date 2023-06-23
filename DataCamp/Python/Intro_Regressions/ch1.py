@@ -49,7 +49,3 @@ lm_fish2 = ols(
 ).fit()
 
 lm_fish2.params
-
-
-# import seaborn as sns
-# sns.histplot
