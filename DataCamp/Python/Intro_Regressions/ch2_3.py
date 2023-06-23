@@ -150,4 +150,27 @@ plt.show()
 model_summ_frame = lm_model.get_influence().summary_frame()
 
 taiwan_real_estate['leverage'] = model_summ_frame['hat_diag']
+taiwan_real_estate['cooks_dist'] = model_summ_frame['cooks_d']
+
+ck = taiwan_real_estate.sort_values('cooks_dist', ascending = False).head()
+ck = taiwan_real_estate.sort_values('leverage', ascending = False).head()
+
+df_ex_outlier = taiwan_real_estate.loc[taiwan_real_estate.index != 270]
+
+sns.regplot(
+    x = 'n_convenience',
+    y = 'price_twd_msq',
+    data = taiwan_real_estate,
+    line_kws = {'color': 'green'}
+)
+
+sns.regplot(
+    x = 'n_convenience',
+    y = 'price_twd_msq',
+    data = df_ex_outlier,
+    line_kws = {'color': 'red'}
+)
+
+plt.show()
+
 
