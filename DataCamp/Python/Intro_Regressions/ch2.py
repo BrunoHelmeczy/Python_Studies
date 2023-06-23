@@ -1,3 +1,4 @@
+import numpy as np
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
@@ -38,3 +39,54 @@ lm_age = ols(
 ).fit()
 
 lm_age.params
+
+# generate predictions
+exp_data = pd.DataFrame(
+    {'n_convenience': np.arange(0, 11)}
+)
+
+pred_data = exp_data.assign(
+    price_twd_msq = lm_model.predict(exp_data)
+)
+
+# assign as new column on model data
+taiwan_real_estate = taiwan_real_estate.assign(
+    price_twd_msq_fc = lm_model.predict(taiwan_real_estate)
+)
+
+# viz predictions & actuals
+fig = plt.figure()
+
+taiwan_real_estate.columns
+sns.regplot(
+    x = 'n_convenience',
+    y = 'price_twd_msq',
+    ci = None,
+    data = taiwan_real_estate
+)
+
+sns.scatterplot(
+    x = 'n_convenience',
+    y = 'price_twd_msq_fc',
+    data = taiwan_real_estate,
+    color = 'red',
+    marker = 's'
+)
+plt.show()
+
+# Info extraction fr models
+
+# coefficients
+lm_model.params
+
+# fitted values
+# same as lm_model.predict(taiwan_real_estate) 
+lm_model.fittedvalues
+
+# residuals: Y-actuals - fittedvalues
+lm_model.resid
+
+# Summary of results: Rsq + similar stats + coeffs & P-values
+lm_model.summary()
+
+# 
