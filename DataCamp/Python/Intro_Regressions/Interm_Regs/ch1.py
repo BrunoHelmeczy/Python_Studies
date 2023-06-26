@@ -88,8 +88,18 @@ sns.lmplot(
     y = 'mass_g',
     data = fish,
     hue = 'species'
-    # , fit_reg = False
 )
 
 plt.show()
+
+# gen. preds
+from itertools import product
+
+lengths = np.arange(5, 61, 5)
+fishes = fish['species'].unique()
+
+exp_data = pd.DataFrame(
+    product( lengths, fishes),
+    columns = ['length_cm', 'species']
+)
 
