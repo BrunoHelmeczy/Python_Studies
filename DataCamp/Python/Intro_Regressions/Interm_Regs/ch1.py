@@ -45,3 +45,30 @@ lm_fish_mlr = ols(
 lm_fish_mlr.params
 
 lm_fish_mlr.summary()
+
+# 1a) standard vis - simple lin reg
+sns.regplot(
+    x = 'length_cm',
+    y = 'mass_g',
+    data = fish,
+    ci = None
+)
+plt.show()
+
+sns.boxplot(
+    x = 'species',
+    y = 'mass_g',
+    data = fish,
+    showmeans = True
+)
+plt.show()
+
+# extend to MLR
+sns.lmplot(
+    x = 'length_cm',
+    y = 'mass_g',
+    data = fish,
+    hue = 'species'
+)
+
+plt.show()
