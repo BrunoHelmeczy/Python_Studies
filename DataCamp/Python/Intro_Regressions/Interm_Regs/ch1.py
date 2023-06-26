@@ -103,3 +103,16 @@ exp_data = pd.DataFrame(
     columns = ['length_cm', 'species']
 )
 
+pred_data = exp_data.assign(
+    mass_g_fc = lm_fish_mlr.predict(exp_data)
+)
+
+# performance assessment
+
+# rsquared
+lm_fish_mlr.summary()
+
+lm_fish_mlr.rsquared # not adj. r-squared... 
+lm_fish_mlr.rsquared_adj 
+lm_fish_mlr.mse_resid # mean squared error
+lm_fish_mlr.mse_resid ** 0.5 # residual standard error / rmse (minor difference due to degrees of freedom)
