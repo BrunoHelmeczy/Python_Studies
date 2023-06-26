@@ -63,12 +63,33 @@ sns.boxplot(
 )
 plt.show()
 
-# extend to MLR
+# extend to MLR - parallel slopes
+sns.lmplot(
+    x = 'length_cm',
+    y = 'mass_g',
+    data = fish,
+    hue = 'species',
+    fit_reg = False
+)
+
+coeffs = lm_fish_mlr.params
+bream, perch, pike, roach, sl = coeffs
+
+ics = [bream, perch, pike, roach]
+colors = ['blue', 'green', 'red', 'orange']
+
+[plt.axline(xy1 = (0, ics[i]), slope = sl, color = colors[i]) for i in range(len(colors))]
+
+plt.show()
+
+# extend to MLR - non-parallel slopes
 sns.lmplot(
     x = 'length_cm',
     y = 'mass_g',
     data = fish,
     hue = 'species'
+    # , fit_reg = False
 )
 
 plt.show()
+
