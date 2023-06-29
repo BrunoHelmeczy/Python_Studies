@@ -1,38 +1,11 @@
 # %%
-# import numpy as np
-import pandas as pd
-# import matplotlib.pyplot as plt
-# import seaborn as sns
-# from statsmodels.formula.api import logit 
-# from itertools import product
-from pathlib import Path
-from os import listdir, getcwd
+import os
 
-# %%
-
-
-# %% 
-def getData(csv_name):
-
-    if getcwd().split('\\')[-1] == 'Python_Studies':
-        data_folder = Path().resolve().joinpath('DataCamp/Python/Plotly/data')
-    else: 
-        data_folder = Path().resolve().joinpath('data')
-
-    csvs = listdir(data_folder)
-
-    if csv_name not in csvs:
-        csv_text = f'Select from these available files: \n{csvs}'
-        data_text = f'Alternatively, move your file in the data folder: \n{data_folder}'
-
-        return print(f'Error: "{csv_name}" is not present in the data folder. \n\n{csv_text} \n\n{data_text}\n')
-    
-    return pd.read_csv(
-        data_folder.joinpath(csv_name)
-    )
-
-# rain = getData('rain.csv')
-
+if os.getcwd().split('\\')[-1] == 'Python_Studies':
+    from DataCamp.Python.Plotly.my_utils import *
+else:
+    from my_utils import *
+print(getData)
 
 # %%
 
