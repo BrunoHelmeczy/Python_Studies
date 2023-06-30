@@ -12,13 +12,15 @@ import plotly.graph_objects as go
 print(getData)
 
 # %%
-pens = df = getData('penguins.csv')
-df.columns
+pens = getData('penguins.csv')
+pens.columns
 
-df['Species'] = df['Species'].str.replace(r' .+', '', regex = True)
+pens['Species'] = pens['Species'].str.replace(r' .+', '', regex = True)
+
+# print(pens['Species'].unique())
 
 px.scatter(
-    data_frame = df,
+    data_frame = pens,
     x = 'Body Mass (g)',
     y = 'Flipper Length (mm)',
     color = 'Species',
@@ -35,10 +37,10 @@ px.scatter(
 )
 
 # %%
-apple = df = getData('AAPL.csv')
+apple = getData('AAPL.csv')
 
 px.line(
-    data_frame = df,
+    data_frame = apple,
     x = 'Date',
     y = 'Close',
     title = '<b>AAPL</b> price'
@@ -47,8 +49,8 @@ px.line(
 
 go.Figure(
     go.Scatter(
-        x = df['Body Mass (g)'],
-        y = df['Flipper Length (mm)'],
+        x = pens['Body Mass (g)'],
+        y = pens['Flipper Length (mm)'],
         mode = 'markers'
     )
 )
@@ -80,11 +82,36 @@ go.Figure(
     )
 )
 
+
 # %%
-df = getData('world_bank_population.csv').dropna()
 
-df.columns
+# pens.columns
+pen_flips = pens.assign(
+    spec = pens[['Species']].replace(' .+', '', regex = True)
+).groupby('spec', as_index = False).agg(
+    av_flip_length = ('Flipper Length (mm)', np.mean)
+)
 
-cols = ['Country Name', 'Country Code', '']
+px.bar(
+    data_frame = pen_flips,
+    x = 'spec',
+    y = 'av_flip_length'
+).update_layout(
+    xaxis = {'title': {'text': 'Species'}},
+    yaxis = {
+        'title': {'text': 'Average <b>Flipper</b> Length'},
+        'range': [150, pen_flips['av_flip_length'].max() + 30]
+    }
+)
+
+# %%
+px.line(
+    data_frame = apple,
+    x = 'Date',
+    y = 'Close'
+    , log_y = True
+).update_layout(
+    hovermode = 'x'
+)
 
 # %%
