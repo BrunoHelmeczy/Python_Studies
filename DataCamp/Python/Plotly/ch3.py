@@ -97,3 +97,42 @@ fig.update_layout(
 )
 
 # %%
+# over-laying plots --> keep adding traces:
+    # fig = go.Figure()
+    # fig.add_trace(
+    #   go.Scatter/Bar/Histogram: (
+    #   x = df['col_name'],
+    #   y = df['col_name'],
+    #   name = 'trace_name' 
+    #   )
+    # )
+
+# %%
+# Time buttons (?) (+ rangeslider)
+rain = getData('rain.csv')
+rain['Date'] = pd.to_datetime(rain['Date'], format = "%d/%m/%y")
+
+buttons = [
+    {'count': 6,  'step': "month", "stepmode": "todate", "label": "6MTD"},
+    {'count': 14, 'step': "day"  , "stepmode": "todate", "label": "2wks"}
+]
+
+# rain.columns
+px.line(
+    data_frame = rain,
+    x = 'Date',
+    y = 'Rainfall',
+    title = 'Rainfall (mm) in Sydney'
+).update_layout(
+    xaxis = {
+        'rangeselector': {'buttons': buttons},
+        'rangeslider': {
+            'visible': True,
+            'thickness': 0.08
+        },
+        'type': 'date'
+    },
+    hovermode = 'x'
+)
+
+# %%
