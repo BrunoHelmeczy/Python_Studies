@@ -1,0 +1,68 @@
+# %%
+import os
+
+if os.getcwd().split('\\')[-1] == 'Python_Studies':
+    from DataCamp.Python.Plotly.my_utils import *
+else:
+    from my_utils import *
+
+import plotly.express as px
+import plotly.graph_objects as go
+
+print(getData)
+
+
+# %%
+# custom buttons
+rev = getData('revenue_data2.csv')
+
+rev.loc[rev['Revenue'] == 'Unknown', 'Revenue'] = None
+rev = rev.dropna(subset = 'Revenue')
+rev['Revenue'] = rev['Revenue'].astype('int')
+
+inds = ['Tech', 'Oil', 'Professional Services', 'Pharmaceuticals']
+
+rev_sub = rev[rev['Industry'].isin(inds)]
+
+# rev.columns
+fig = px.bar(
+    data_frame = rev_sub,
+    x = 'Industry',
+    y = 'Revenue',
+    color = 'Industry'
+)
+
+buttons = [
+    {
+        'label': 'Bars',
+        'method': 'update',
+        'args': [{'type': 'bar'}]
+    },
+    {
+        'label': 'Scatter',
+        'method': 'update',
+        'args': [{'type': 'scatter', 'mode': 'markers'}]
+    }
+]
+
+# buttons --> 'args': [{dict1}, {dict2}]
+    # dict1: dict to send to data
+    # dict2: dict to send to layout
+# dir(fig)
+# dir(fig.layout)
+# dir(fig.data[0])
+
+fig.update_layout(
+    updatemenus = [{
+        'type': 'buttons',
+        'direction': 'down',
+        'x': 1.3, 'y': 0.5,
+        'showactive': True,
+        'active': 0, 
+        'buttons': buttons
+    }],
+    showlegend = False
+)
+
+
+# %%
