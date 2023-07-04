@@ -66,4 +66,41 @@ pd.DataFrame(data = data, index = index)
 
 
 # 2) Indexing & Resampling
+import matplotlib.pyplot as plt
+
+google = getData('google.csv')
+google.info()
+
+google['Date'] = pd.to_datetime(google['Date'])
+google.set_index('Date', inplace = True)
+
+google.Close.plot()
+
+plt.tight_layout(); plt.show()
+
+# 2.1) partial string indexing
+google.loc['2015']
+google.loc['2015-01']
+google.loc['2015-01':'2015-03']
+google.loc['2015-01':'2015-03', 'Close']
+google.loc['2014-01-02', 'Close'] # value
+google.loc['2014-01-02'] # series w length = 1
+
+google.isna().value_counts()
+google.asfreq('B').isna().value_counts()
+
+bus_goog = google.asfreq('B')
+NAs = bus_goog.isna()
+
+google[google.Close.isna()]
+bus_goog[bus_goog.Close.isna()]
+
+
+# 2. exercises)
+nyc = getData('nyc.csv')
+
+nyc['date'] = pd.to_datetime(nyc['date'])
+nyc.set_index('date', inplace = True)
+
+nyc.plot(subplots = True); plt.show()
 
