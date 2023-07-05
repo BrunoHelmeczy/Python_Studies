@@ -104,3 +104,18 @@ nyc.set_index('date', inplace = True)
 
 nyc.plot(subplots = True); plt.show()
 
+
+co = getData('co_cities.csv')
+co['date'] = pd.to_datetime(co['date'])
+co.set_index('date', inplace = True)
+
+# co.info()
+co = co.asfreq('D')
+
+co.plot(subplots = True); plt.show()
+
+co = co.asfreq('M')
+co.plot(subplots = True); plt.show()
+
+# 3) lags, changes, returns
+
