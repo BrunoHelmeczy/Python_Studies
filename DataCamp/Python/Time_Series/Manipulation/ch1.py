@@ -118,4 +118,7 @@ co = co.asfreq('M')
 co.plot(subplots = True); plt.show()
 
 # 3) lags, changes, returns
+# built-in in pd - given DateTimeIndex
+goog = getGoogleStockData()
 
+goog['pct_chg'] = goog['price'].pct_change(periods = 1).mul(100)
