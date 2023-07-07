@@ -102,3 +102,83 @@ norm = df.div(df.iloc[0]).mul(100)
 norm[tickers].sub(norm['SP500'], axis = 0).plot(); plt.show()
 
 # 2.2) Change ts frequency
+# upsampling (weekly --> daily) --> fill/interpolate missing data
+# downsample (daily --> weekly) --> aggregate existing data
+# pd methods: asfreq(); reindex(); resample()
+
+Qs = pd.Series(
+    data = range(1, 5),
+    index = pd.date_range(start = '2016', periods = 4, freq = 'Q')
+)
+
+monthly = Qs.asfreq('M').to_frame('baseline')
+
+monthly['ffill'] = Qs.asfreq('M', method = 'ffill')
+monthly['bfill'] = Qs.asfreq('M', method = 'bfill')
+monthly['value'] = Qs.asfreq('M', fill_value = 0)
+
+# add missing months at start
+Ms = pd.date_range(start = '2016', periods = 12, freq = 'M')
+
+monthly.reindex(Ms)
+
+Qs.reindex(Ms).to_frame('baseline')
+
+# 2.2) Exercises
+# 2.2.1) 
+start = '2016-01-01'
+end = '2016-02-29'
+
+mnth_data = pd.date_range(start = start, end = end, freq = 'M')
+
+monthly = pd.Series(
+    data = [1, 2],
+    index = mnth_data
+)
+
+wk_dates = pd.date_range(start = start, end =end, freq = 'W')
+
+monthly.reindex(wk_dates, method = 'bfill')
+monthly.reindex(wk_dates, method = 'ffill')
+
+
+# 2.2.2)
+df = pd.read_csv(
+    getFilePaths('unrate_2000.csv')[0],
+    parse_dates = ['date'],
+    index_col = 'date'
+)
+
+df.asfreq('W', method = 'ffill')['2015':].plot(); plt.show()
+
+# 2.3) Upsample interpolation w .resample()
+# .resample() ~ .groupby()
+unrate = pd.read_csv(
+    getFilePaths('unrate_2000.csv')[0],
+    parse_dates = ['date'],
+    index_col = 'date'
+)
+
+# unrate.info()
+unrate.asfreq('M')
+unrate.asfreq('MS')
+unrate.asfreq('BM')
+unrate.asfreq('BMS')
+
+# assert equality
+unrate.asfreq('MS').equals(unrate.resample('MS').asfreq())
+
+gdp = pd.read_csv(
+    getFilePaths('gdp_growth.csv')[0],
+    parse_dates = ['date'],
+    index_col = 'date'
+)
+
+gdp.info()
+
+gdp1 = gdp.resample('MS').ffill().add_suffix('_ffill')
+gdp2 = gdp.resample('MS').interpolate().add_suffix('_inter')
+
+pd.concat([gdp1, gdp2], axis = 1).plot(); plt.show()
+pd.concat([unrate, gdp2], axis = 1)['2007':'2017-01'].plot(); plt.show()
+
