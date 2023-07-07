@@ -182,3 +182,31 @@ gdp2 = gdp.resample('MS').interpolate().add_suffix('_inter')
 pd.concat([gdp1, gdp2], axis = 1).plot(); plt.show()
 pd.concat([unrate, gdp2], axis = 1)['2007':'2017-01'].plot(); plt.show()
 
+# 2.3) exercises
+# 2.3.1)
+ex1 = unrate[:'2017-01']
+
+wk_dates = pd.date_range(
+    start = ex1.index.min(),
+    end = ex1.index.max(),
+    freq = 'W'
+)
+
+wkly = ex1.reindex(wk_dates)
+
+wkly.assign(
+    ffill = wkly.UNRATE.ffill(),
+    inter = wkly.UNRATE.interpolate()
+).plot(); plt.show()
+
+# 2.3.2)
+df = pd.read_csv(
+    getFilePaths('debt_unemployment.csv')[0],
+    parse_dates = ['date'],
+    index_col = 'date'
+)
+
+df.interpolate().plot(secondary_y = 'Unemployment'); plt.show()
+
+# 2.4) downsampling & aggregation
+
