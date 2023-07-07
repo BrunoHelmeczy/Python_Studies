@@ -5,11 +5,12 @@ def checkFx():
     print('hello there')
 
 # filename_string = 'google.csv'
+# filename_string = 'ozone'
 def getFilePaths(filename_string, course_folder = 'Time_Series'):
     repo_home = Path().resolve().cwd()
     python_path = repo_home.joinpath('DataCamp/Python')
 
-    return list(python_path.joinpath(course_folder).rglob(f'*/{filename_string}'))
+    return list(python_path.joinpath(course_folder).rglob(f'*/{filename_string}*'))
 
 def getData(filename_string, course_folder = 'Time_Series'):
     repo_home = Path().resolve().cwd()
