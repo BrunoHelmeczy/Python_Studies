@@ -209,4 +209,87 @@ df = pd.read_csv(
 df.interpolate().plot(secondary_y = 'Unemployment'); plt.show()
 
 # 2.4) downsampling & aggregation
+# mean, median, min, max, first, last values (?)
+ozone = pd.read_csv(
+    getFilePaths('ozone')[0],
+    parse_dates = ['date'],
+    index_col = 'date'
+)
 
+ozone.info()
+ozone = ozone.resample('D').asfreq()
+
+ozone.resample('M').mean()
+ozone.resample('M').median()
+ozone.resample('M').min()
+ozone.resample('M').max()
+ozone.resample('M').count()
+ozone.resample('M').first()
+ozone.resample('M').last()
+ozone.resample('M').sum()
+
+ozone.resample('MS').agg(['count', 'min', 'max', 'mean', 'std', 'first', 'last'])
+
+forplot = ozone['2016':]
+
+ax = forplot.plot()
+forplot.resample('M').mean().add_suffix('_monthly').plot(ax = ax); plt.show()
+
+
+nyla = pd.read_csv(
+    getFilePaths('ozone_nyla')[0],
+    parse_dates = ['date'],
+    index_col = 'date'
+).resample('D').asfreq()
+
+nyla.info()
+
+nyla.resample('BM').mean()
+nyla.resample('MS').first()
+nyla.resample('MS').last()
+
+# 2.4) exercises
+# 2.4.1)
+nyla.resample('W').mean().plot(); plt.show()
+nyla.resample('M').mean().plot(); plt.show()
+nyla.resample('A').mean().plot(); plt.show()
+
+# 2.4.2)
+stocks = pd.read_csv(
+    getFilePaths('goog_fb')[0],
+    parse_dates = ['date'],
+    index_col = 'date'
+)
+
+stocks.resample('M').mean().plot(subplots = True); plt.show()
+
+# 2.4.3)
+gdp = pd.read_csv(
+    getFilePaths('gdp')[0],
+    parse_dates = ['date'],
+    index_col = 'date'
+)
+
+djia = pd.read_csv(
+    getFilePaths('djia')[0],
+    parse_dates = ['date'],
+    index_col = 'date'
+)
+
+df = pd.concat([
+    gdp,
+    djia.resample('QS').first().pct_change().mul(100)
+], axis = 1)
+df.columns = ['gdp', 'djia']
+
+df.plot(); plt.show()
+
+# 2.4.4)
+pd.read_csv(
+    getFilePaths('sp500')[0],
+    parse_dates = ['date'],
+    index_col = 'date'
+).squeeze().pct_change().resample('M').agg(
+    ['mean', 'median', 'std']
+).plot()
+plt.show()
