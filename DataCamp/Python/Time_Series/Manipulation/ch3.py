@@ -58,3 +58,6 @@ roll.agg(
 
 # 3.1) exercises
 # 3.1.1)
+# ...
+
+# 3.2) expanding window fx()s - cumsum, etc.
