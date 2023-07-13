@@ -17,7 +17,8 @@ def test_with_one_comma():
     expr = "2,081"
     actual = convert_to_int(expr)
     expected = 2081
-    assert actual == expected, f'Expected: {expected}, Actual: {actual}'
+    assert isinstance(actual, int), f'ReturnValue is not integer'
+    assert actual == expected, f'ReturnValue unequal to Expectation; Expected: {expected}, Actual: {actual}'
 
 def test_with_two_commas():
     expr = "1,034,891"
