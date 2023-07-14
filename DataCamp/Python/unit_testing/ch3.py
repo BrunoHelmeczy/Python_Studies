@@ -86,3 +86,4 @@ class TestTrainModel(object):
 
 # 3.4.1) build status
 # Travis CI
+# Codecov
