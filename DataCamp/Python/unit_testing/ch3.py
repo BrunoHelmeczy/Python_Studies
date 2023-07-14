@@ -82,3 +82,7 @@ class TestTrainModel(object):
         assert actual_intercept == pytest.approx(expected_intercept), intercept_message
 
 # 3.4) CI & Code Coverage
+# adding build status & code coverage badges
+
+# 3.4.1) build status
+# Travis CI 
