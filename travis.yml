@@ -3,7 +3,7 @@ python:
   - "3.11"
 install:
   - pip install -e DataCamp/Python/unit_testing/.
-  - pip install codecov pytest-cov
+  - pip install pytest-cov codecov
 script:
   - pytest --cov=DataCamp/Python/unit_testing/src DataCamp/Python/unit_testing/tests
 after_success:
