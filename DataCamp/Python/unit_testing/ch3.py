@@ -37,3 +37,48 @@ from src.data.train import *
 # stop after 1st failed test:   `py -m pytest -x <path/to/your/tests/bla.py>`
 # find tests via keyword:       `py -m pytest -k "row" <path/to/your/tests/bla.py>`
 
+# 3.3) Expected failures & Conditional Skipping
+# Expected failure:     @pytest.mark.xfail
+    # show reason in CLI summary: `py -m pytest -rs <path/to/your/tests/...>` 
+# Skip conditionally:   @pytest.mark.skipif(boolean_expr, reason = "write your reason here")
+    # show reason in CLI summary: `py -m pytest -rs <path/to/your/tests/...>` 
+
+# show both: `py -m pytest -rsx <path/to/your/tests/...>` 
+class TestTrainModel(object):
+    @pytest.mark.xfail(reason = "Using TDD, train_model() not implemented yet") # use if f(x) tested is not yet implemented
+    def test_on_linear_data(self):
+        test_argument = np.array([[1.0, 3.0], [2.0, 5.0], [3.0, 7.0]])
+        expected_slope = 2.0
+        expected_intercept = 1.0
+        actual_slope, actual_intercept = train_model(test_argument)
+        slope_message = ("train_model({0}) should return slope {1}, "
+                         "but it actually returned slope {2}".format(test_argument, expected_slope, actual_slope)
+                         )
+        intercept_message = ("train_model({0}) should return intercept {1}, "
+                             "but it actually returned intercept {2}".format(test_argument,
+                                                                             expected_intercept,
+                                                                             actual_intercept
+                                                                             )
+                             )
+        assert actual_slope == pytest.approx(expected_slope), slope_message
+        assert actual_intercept == pytest.approx(expected_intercept), intercept_message
+
+    @pytest.mark.skipif(sys.version_info > (2, 7), reason = 'runs in <= Python 2.7')
+    def test_on_linear_data2(self):
+        test_argument = np.array([[1.0, 3.0], [2.0, 5.0], [3.0, 7.0]])
+        expected_slope = 2.0
+        expected_intercept = 1.0
+        actual_slope, actual_intercept = train_model(test_argument)
+        slope_message = ("train_model({0}) should return slope {1}, "
+                         "but it actually returned slope {2}".format(test_argument, expected_slope, actual_slope)
+                         )
+        intercept_message = ("train_model({0}) should return intercept {1}, "
+                             "but it actually returned intercept {2}".format(test_argument,
+                                                                             expected_intercept,
+                                                                             actual_intercept
+                                                                             )
+                             )
+        assert actual_slope == pytest.approx(expected_slope), slope_message
+        assert actual_intercept == pytest.approx(expected_intercept), intercept_message
+
+# 3.4) CI & Code Coverage
