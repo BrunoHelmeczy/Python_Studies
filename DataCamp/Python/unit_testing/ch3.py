@@ -85,4 +85,4 @@ class TestTrainModel(object):
 # adding build status & code coverage badges
 
 # 3.4.1) build status
-# Travis CI 
+# Travis CI
