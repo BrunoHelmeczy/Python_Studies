@@ -52,3 +52,35 @@ def my_test3():
 
 # my_test3()
 
+# 2.3) Well-tested f(x)
+# Well-tested == tested for each argument type:
+    # bad arggument; special argument; normal argument
+
+# bad args:
+    # def: function raises exception (ValueError)
+    # e.g. split_into_training_and_testing_sets(eg_arg)
+        # eg_arg = 1 dimensional
+        # eg_arg = 1 row only
+
+# special args:
+    # boundary values: 2d array w 2 rows --> train-test = 1-1
+    # arg values for which f(x) has special logic
+        # f(x) logic: 4 rows --> train-test = 3-1
+            # special: train-test = 2-2
+            # if 4 is special value --> 3; 5 rows are boundary values
+
+# normal args: test 2-3 of them
+    # not directly next to bad/special args
+
+# 2.4) Test-Driven Development
+    # Priority: 1) Feature dev 2) testing
+    # TDD: Tests written 1st
+        # Unit test writing time (part of implementation time)
+        # Feature dev includes thinkging of:
+            # Norm/Spec/Bad args; Return Values; Exceptions --> Clearer reqs for implementation
+            # Clearer implementation reqs --> easier/faster implementation
+
+# 2.4) Exercise: implement convert_to_int() via TDD
+# 1) write tests
+# 2) implement f(x)
+# 3) ensure passing all tests
