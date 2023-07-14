@@ -4,7 +4,7 @@ import pytest
 import sys
 sys.path.append('DataCamp/Python/unit_testing')
 from src.data.preprocessing_helpers import *
-from src.data.train import *
+from src.train.train import *
 
 # 3.1) Org. growing set of tests
 # all code: src folder
