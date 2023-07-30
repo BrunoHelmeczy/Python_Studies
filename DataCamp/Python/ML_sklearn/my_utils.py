@@ -3,14 +3,20 @@ import pandas as pd
 from pathlib import Path
 from os import listdir, getcwd
 
-def getData(csv_name, folder):
-
+def getData(csv_name = '', folder = 'ML_sklearn', all = False):
     if getcwd().split('\\')[-1] == 'Python_Studies':
         data_folder = Path().resolve().joinpath(f'DataCamp/Python/{folder}/data')
     else: 
         data_folder = Path().resolve().joinpath('data')
 
     csvs = listdir(data_folder)
+
+    if all:
+        return {
+            csv.strip('.csv'): pd.read_csv(
+                data_folder.joinpath(csv)
+            ) for csv in csvs
+        }
 
     if csv_name not in csvs:
         csv_text = f'Select from these available files: \n{csvs}'
@@ -23,7 +29,11 @@ def getData(csv_name, folder):
     )
 
 def get_all_data_dfs(relpath):
-    filepaths = list(Path().resolve().joinpath(relpath).rglob('data/*'))
-    files = [f.as_uri().split('/')[-1] for f in filepaths]
+    if getcwd().split('\\')[-1] == 'Python_Studies':
+        data_folder = Path().resolve().joinpath(relpath).joinpath('data')
+    else: 
+        data_folder = Path().resolve().joinpath('data')
+    
+    csvs = listdir(data_folder)
 
-    return {f.strip('.csv'):getData(f, 'ML_sklearn') for f in files}
+    return {f.strip('.csv'):getData(f, 'ML_sklearn') for f in csvs}
