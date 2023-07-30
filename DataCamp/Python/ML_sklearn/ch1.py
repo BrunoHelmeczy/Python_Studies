@@ -1,11 +1,20 @@
+# %%
 REL_PATH = 'DataCamp/Python/ML_sklearn'
 
 import sys
 sys.path.append(REL_PATH)
 from my_utils import *
 
-dfs = get_all_data_dfs(REL_PATH)
+import os
+os.getcwd()
 
+# %%
+dfs = getData(all = True)
+# getData('diabetes_clean.csv')
+
+dfs.keys()
+
+# %%
 # 1.2) Classification Challenge
 churn_df = dfs['telecom_churn_clean'].set_index(
     'Unnamed: 0', 
@@ -53,3 +62,72 @@ X_new = np.array([
 y_pred = knn.predict(X_new)
 
 # 1.3) Measure Model Performance
+from sklearn.model_selection import train_test_split
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, 
+    test_size = 0.3, 
+    random_state = 42, 
+    stratify = y
+)
+
+knn = KNeighborsClassifier(n_neighbors = 6).fit(X_train, y_train)
+
+y_pred = knn.predict(X_test)
+knn.score(X_test, y_test)
+
+# accuracies = pd.DataFrame(columns = ['n_neighbors', 'train', 'test'])
+
+accuracies = {}
+
+knn_ns = np.arange(1, 26)
+
+ns = 1
+for ns in knn_ns:
+    knn = KNeighborsClassifier(n_neighbors = ns).fit(
+        X_train, y_train
+    )
+
+    row = {
+        'n_neighbors': ns,
+        'train': knn.score(X_train, y_train).round(3),
+        'test': knn.score(X_test, y_test).round(3)
+    }
+
+    accuracies[ns] = row
+
+res = pd.DataFrame.from_dict(accuracies, orient = 'index' )
+res.sort_values(by = 'test', ascending = False)  
+
+
+# %%
+import plotly.express as px
+
+
+# res.columns[1:] = 'acc_' + res.columns[1:]
+
+df_long = pd.melt(
+    frame = res,
+    id_vars = ['n_neighbors'],
+    var_name = 'sample',
+    value_name = 'accuracy'
+)
+
+px.line(
+    data_frame = df_long,
+    x = 'n_neighbors'
+    , y = 'accuracy'
+    , color = 'sample'
+    , title = 'KNN In/Out Sample Accuracies'
+).update_layout(
+    hovermode = 'x',
+    legend = {
+        'orientation': 'h',
+        'x': 0.5,
+        'xanchor': 'center'
+
+    }
+)
+
+
+# %%
