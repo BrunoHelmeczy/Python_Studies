@@ -62,3 +62,31 @@ fig.add_trace(
 )
 
 # %%
+# 2.2) MLR
+
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+
+X = diabetes.drop('diabetes', axis = 1).values
+y = diabetes['diabetes'].values
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, 
+    random_state = 42, 
+    test_size = 0.3,
+    stratify = y
+)
+
+reg = LinearRegression().fit(X_train, y_train)
+y_pred = reg.predict(X_test)
+
+reg.score(X_test, y_test) # R-squared
+
+from sklearn.metrics import mean_squared_error
+
+mean_squared_error(y_test, y_pred) # squared = True (default) --> MSE
+mean_squared_error(y_test, y_pred, squared = False) # squared = False --> RMSE
+
+
+# %%
+
