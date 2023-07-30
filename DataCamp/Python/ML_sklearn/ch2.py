@@ -127,3 +127,71 @@ np.mean(cv_scores).round(3)
 np.std(cv_scores).round(3)
 np.quantile(cv_scores, [0.025, 0.975]).round(3)
 
+
+# %%
+# 2.4) Regularized Regressions: Ridge(): Lasso()
+from sklearn.linear_model import Ridge
+
+alphas = 10 ** np.arange(-1.0, 4.0)
+
+def get_ridge_scores(alpha, X_train, X_test, y_train, y_test):
+    ridge = Ridge(alpha = alpha).fit(X_train, y_train)
+
+    y_pred = ridge.predict(X_test)
+    return ridge.score(X_test, y_test)
+
+[get_ridge_scores(alpha, X_train, X_test, y_train, y_test) for alpha in alphas]
+
+# %%
+
+from sklearn.linear_model import Lasso
+
+alphas = [0.1, 1, 10, 20, 50]
+
+def get_lasso_scores(alpha, X_train, X_test, y_train, y_test):
+    lasso = Lasso(alpha = alpha).fit(X_train, y_train)
+
+    y_pred = lasso.predict(X_test)
+    return lasso.score(X_test, y_test)
+
+[get_lasso_scores(alpha, X_train, X_test, y_train, y_test) for alpha in alphas]
+# %%
+# Lasso --> for feature selection
+x = diabetes.drop('glucose', axis = 1)
+X = x.values
+names = x.columns
+y = diabetes['glucose'].values
+
+alphas = 10 ** np.arange(-3.0, 4.0)
+
+res = {a:Lasso(alpha = a).fit(X, y).coef_ for a in alphas}
+
+coef_df = pd.DataFrame().from_dict(
+    res, 
+    orient = 'index', 
+    columns = names
+).reset_index(
+    drop = False, 
+    names = 'alpha'
+).melt(
+    id_vars = 'alpha',
+    var_name = 'IVs'
+)
+# Lasso(alpha = 0.1).fit(X, y).coef_
+
+coef_df['alpha'] = coef_df['alpha'].astype('str')
+
+px.bar(
+    data_frame = coef_df,
+    x = 'IVs',
+    y = 'value',
+    color = 'alpha'
+).update_layout(
+    barmode = 'group'
+)
+
+# dont stack values --> hide them behind 1 another
+# set descrete color palette for alpha
+
+
+# %%
