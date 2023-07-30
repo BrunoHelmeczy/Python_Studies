@@ -89,4 +89,41 @@ mean_squared_error(y_test, y_pred, squared = False) # squared = False --> RMSE
 
 
 # %%
+# 2.3) Cross Validation
+from sklearn.model_selection import cross_val_score, KFold
+kf = KFold(n_splits = 5, shuffle = True, random_state = 42)
+
+reg = LinearRegression()
+
+cv_train = cross_val_score(reg, X_train, y_train, cv = kf)
+cv_all   = cross_val_score(reg, X, y, cv = kf)
+
+np.mean(cv_train).round(3)
+np.std(cv_train).round(3)
+np.mean(cv_all).round(3)
+np.std(cv_all).round(3)
+
+# %%
+sales_df = dfs['advertising_and_sales_clean']
+X = sales_df.drop(['sales', 'influencer'], axis = 1).values
+y = sales_df['sales'].values
+
+kf = KFold(n_splits = 5, shuffle = True, random_state = 42)
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, 
+    random_state = 42, 
+    test_size = 0.1
+    # stratify = y # only for classification problems
+)
+reg = LinearRegression()
+cv_scores = cross_val_score(
+    reg, 
+    X_train, y_train,
+    cv = kf
+)
+
+np.mean(cv_scores).round(3)
+np.std(cv_scores).round(3)
+np.quantile(cv_scores, [0.025, 0.975]).round(3)
 
