@@ -3,7 +3,7 @@ import pandas as pd
 from pathlib import Path
 from os import listdir, getcwd
 
-def getData(csv_name = '', folder = 'ML_sklearn', all = False):
+def getData(csv_name = '', folder = 'ML_TreeModels', all = False):
     if getcwd().split('\\')[-1] == 'Python_Studies':
         data_folder = Path().resolve().joinpath(f'DataCamp/Python/{folder}/data')
     else: 
@@ -27,3 +27,5 @@ def getData(csv_name = '', folder = 'ML_sklearn', all = False):
     return pd.read_csv(
         data_folder.joinpath(csv_name)
     )
+
+print('sourcing successful')
