@@ -132,6 +132,3 @@ cv.best_score_
 
 cv.score(X_test, y_test)
 
-
-# %%
-# evaluate multiple models
