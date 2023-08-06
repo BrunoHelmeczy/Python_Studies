@@ -93,3 +93,91 @@ px.line(
 )
 
 # %%
+# Hyper param tuning:
+from sklearn.model_selection import GridSearchCV, RandomizedSearchCV, KFold
+from sklearn.linear_model import Ridge
+kf = KFold(n_splits = 5, shuffle = True, random_state = 42)
+
+param_grid = {
+    'alpha': np.arange(0.0001, 1, 0.1),
+    'solver': ['sag', 'lsqr']
+}
+
+np.arange(0.0001, 1, 0.1)
+
+ridge = Ridge()
+
+ridge_cv = GridSearchCV(ridge, param_grid, cv = kf)
+
+ridge_cv.fit(X_train, y_train)
+
+ridge_cv.best_params_
+ridge_cv.best_score_
+
+ridge2 = Ridge()
+
+ridge_cv2 = RandomizedSearchCV(
+    ridge2, param_grid, cv = kf, n_iter = 2
+)
+
+ridge_cv2.fit(X_train, y_train)
+
+ridge_cv2.best_params_
+ridge_cv2.best_score_
+
+ridge_cv2.score(X_test, y_test)
+
+
+# %%
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import Lasso
+
+diabetes = dfs['diabetes_clean']
+X = diabetes.drop('diabetes', axis = 1).values
+y = diabetes['diabetes'].values
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, 
+    test_size = 0.3, 
+    random_state = 42, 
+    stratify = y
+)
+
+param_grid = {
+    'alpha': np.linspace(0.00001, 1, 20)
+}
+
+lasso = Lasso()
+
+lasso_cv = GridSearchCV(
+    lasso,
+    param_grid,
+    cv = kf
+)
+
+lasso_cv.fit(X_train, y_train)
+
+lasso_cv.best_params_
+lasso_cv.best_score_
+
+# %%
+from sklearn.linear_model import LogisticRegression
+
+logreg = LogisticRegression()
+
+params = {"penalty": ["l1", "l2"],
+         "tol": np.linspace(0.0001, 1.0, 50),
+         "C": np.linspace(0.1, 1, 50),
+         "class_weight": ["balanced", {0:0.8, 1:0.2}]}
+
+logreg_cv = RandomizedSearchCV(
+    logreg,
+    params,
+    cv = kf
+)
+
+logreg_cv.fit(X_train, y_train)
+
+logreg_cv.best_params_
+logreg_cv.best_score_
+
